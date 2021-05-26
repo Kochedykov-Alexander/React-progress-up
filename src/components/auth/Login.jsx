@@ -1,41 +1,54 @@
 import React, { useEffect, useState } from "react";
 import './login.css'
 import Input from '../utils/Input'
-import axios from 'axios'
+import {useDispatch} from "react-redux";
+import {setToken} from '../../reducers/tokenReducer'
 
 export default function Login() {
 
-  const [error, setError] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
 
-  async function getToken() {
+ 
 
+const getToken = () => {
 
-    await fetch('https://progress-up.herokuapp.com/v1/tokens', {
-        method: 'post',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            "authorization": {
-              "email": email,
-              "password": password
-            }
-        })
-}).then(res => {
-        console.log(res);
-        console.log(res.json());
-      })
-}	   
+	return async dispatch => {
+		try {
+	await fetch('https://progress-up.herokuapp.com/v1/tokens', {
 
+		method: 'post',
+		headers: {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({
+			"authorization": {
+			  "email": email,
+			  "password": password
+			}
+		})
+	})
+	.then((res) => res.json())
+	.then((user) => {
+		console.log(user.token)
+    	dispatch(setToken(user.token))	
+		console.log(user.token)
+	})
+}
+	catch (e) {
+		console.log(e)
+	}
+}
+}
 
+  
 	return (
 		<div className="login">
 			<div className="login__title">Вход</div>
-				<form action="" className="login__form">
+				<form action="post" className="login__form">
 					<div className="login__form_email">
 						<div className="login__form_email_text">Email</div>
 						<Input value={email} setValue={setEmail} type="text" placeholder="введите email"/>
@@ -45,7 +58,7 @@ export default function Login() {
 						<Input value={password} setValue={setPassword} type="password" placeholder="введите пароль"/>
 					</div>
 					</form>
-				<button className="login__button" type="submit" onClick={getToken}>Войти</button>
+				<button className="login__button" type="submit" onClick = {() => dispatch(getToken())}>Войти</button>
 		</div>
 	)
 }
