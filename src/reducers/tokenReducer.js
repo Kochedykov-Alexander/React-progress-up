@@ -27,5 +27,9 @@ export default function tokenReducer(state = defaultState, action) {
 }
 
 export const setToken = (token) => ({type: SET_TOKEN, payload: token})
+<<<<<<< HEAD
 export const logout = () => ({type: LOGOUT})
 
+=======
+export const logout = () => ({type: LOGOUT})
+>>>>>>> cc5070eeebf2dcb358f6529dd926c3901167ab49

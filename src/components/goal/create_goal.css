@@ -1,0 +1,88 @@
+.create__article {
+	position: absolute;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+		-ms-flex-direction: column;
+			flex-direction: column;
+	text-align: center;
+	-webkit-box-align: center;
+		-ms-flex-align: center;
+			align-items: center;
+	width: 536px;
+	height: 546px;
+	left: calc(50% - 536px/2 + 2px);
+	top: 150px;
+	background-color: #f7faff;
+	border-radius: 10px;
+  }
+  
+  .create__article__title {
+	font-weight: bold;
+	font-size: 42px;
+	line-height: 49px;
+	margin-top: 26px;
+  }
+  
+  .create__article__form {
+	font-weight: 500;
+	font-size: 28px;
+	margin-top: 60px;
+  }
+  
+  .create__article__form_email {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+		-ms-flex-direction: column;
+			flex-direction: column;
+	-webkit-box-pack: start;
+		-ms-flex-pack: start;
+			justify-content: start;
+  }
+  
+  .create__article__form_password {
+	margin-top: 50px;
+  }
+  
+  .create__article__form_email_text {
+	margin-bottom: 5px;
+	line-height: 33px;
+  }
+  
+  .create__article__form_password_text {
+	margin-bottom: 5px;
+	line-height: 33px;
+  }
+  
+  a {
+	color: #F5F5F5 !important;
+  }
+  
+  
+  
+  .create__article__button {
+	width: 237px;
+	height: 71px;
+	margin-top: 82px;
+	font-weight: bold;
+	font-size: 30px;
+	background: #5444fc;
+	color: #f7faff;
+	-webkit-transition-duration: 1s;
+		 -o-transition-duration: 1s;
+			transition-duration: 1s;
+	border-radius: 10px;
+  }
+  
+  .create__article__button:hover {
+	background: #8799C6;
+	-webkit-transition-duration: 1s;
+		 -o-transition-duration: 1s;
+			transition-duration: 1s;
+  }
+  

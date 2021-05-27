@@ -14,7 +14,7 @@ function Navbar() {
 					{!isAuth && <div className="header__item"><NavLink to="/registration">Регистрация</NavLink></div>}
 					{!isAuth && <div className="header__item"><NavLink to="/login">Вход</NavLink></div>}
 
-					{isAuth && <div className="header__item"><NavLink to="/registration">Личный кабинет</NavLink></div>}
+					{isAuth && <div className="header__item"><NavLink to="/create_goal">Личный кабинет</NavLink></div>}
 					{isAuth && <div className="header__item"><NavLink to="#" onClick={() => dispatch(logout())}>Выход</NavLink></div>}
 				</div>
 			</div>
