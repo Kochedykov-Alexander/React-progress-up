@@ -2,24 +2,24 @@ import React, { useEffect, useState } from "react";
 import './create_goal.css'
 import Input from '../utils/Input'
 import {useDispatch, useSelector} from "react-redux";
+
 export default function CreateGoal() {
 
   
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const currentAuth = useSelector(state => state.token)
- 
+  const currentToken = localStorage.getItem('token')	
 
 async function createGoal() {
 
-	console.log(currentAuth)
+	console.log(currentToken)
 	await fetch('https://progress-up.herokuapp.com/v1/articles', {
 
 		method: 'post',
 		headers: {
 			'Accept': 'application/json',
 			'Content-Type': 'application/json',
-			'Authorization': 'Bearer ' + currentAuth.currentToken,
+			'Authorization': 'Bearer ' + currentToken,
 		},
 		body: JSON.stringify({
 			"article": {

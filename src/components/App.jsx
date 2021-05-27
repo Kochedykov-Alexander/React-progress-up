@@ -7,6 +7,7 @@ import CreateGoal from './goal/CreateGoal'
 import Profile from './profile/Profile'
 import Profile_edit from './profile_edit/Profile_edit'
 import Registration from './registration/Registration'
+import GoalsList from './goal/GoalsList'
 import {useSelector} from 'react-redux'
 
 
@@ -27,10 +28,11 @@ function App() {
           </Switch>
         }
     <Switch>
-      <Route path='/goal' component={Goal}></Route>
       <Route path='/profile' component={Profile}></Route>
       <Route path='/profile_edit' component={Profile_edit}></Route>
       <Route path='/create_goal' component={CreateGoal}></Route>
+      <Route path='/goals_list' component={GoalsList}></Route>
+      <Route path='/goal/:id' component={Goal}></Route>
    </Switch>
     </div>
       </div>
