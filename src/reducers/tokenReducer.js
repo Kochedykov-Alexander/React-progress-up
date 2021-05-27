@@ -1,7 +1,7 @@
 const SET_TOKEN = "SET_TOKEN"
 const LOGOUT = "SET_LOGOUT" 
 
-const defaultState = {
+export const defaultState = {
     currentToken: "",
     isAuth: false
 }
@@ -11,10 +11,11 @@ export default function tokenReducer(state = defaultState, action) {
 		case SET_TOKEN: 
 		return {
 			...state, 
-			currentToken: action.payload.token,
+			currentToken: action.payload,
 			isAuth: true
 		}
 		case LOGOUT: 
+		localStorage.removeItem('token')
 		return {
 			...state, 
 			currentToken: "",
@@ -25,5 +26,6 @@ export default function tokenReducer(state = defaultState, action) {
     }
 }
 
-export const setToken = token => ({type: SET_TOKEN, payload: token})
+export const setToken = (token) => ({type: SET_TOKEN, payload: token})
 export const logout = () => ({type: LOGOUT})
+

@@ -1,21 +1,53 @@
-import React from 'react'
+import {React, useEffect, useState} from 'react'
 import {NavLink} from 'react-router-dom'
 import './profile.css'
+import {useDispatch, useSelector} from "react-redux";
 
-export default function Profile() {
+
+export default function Profile(props) {
+
+	const currentToken = localStorage.getItem('token')
+	const url = 'https://progress-up.herokuapp.com/v1/users/' + props.match.params.user_id;
+	const [data, setData] = useState([]);
+	console.log(currentToken)
+	const currentAuth = useSelector(state => state.token)
+	
+
+	
+	useEffect(() => {
+		 fetch(url, {
+			method: 'get',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'Authorization': 'Bearer ' + currentToken,
+			},
+			
+		})
+		.then((res) => res.json())
+		.then((user) => {
+			setData(user)
+			console.log(currentAuth);
+		})} , [data])
+	
+		const {id, full_name, email, phone, description} = data;
+		const urlToEdit = "/users/edit/" + id;
+	
+
+
 	return (
 		<div>
 			<div className="profile">
 					<div className="profile__name">
-						Имя 
+						{full_name} 
 					</div>
 					<div className="profile__info_title">Контактная информация: </div>
 						<div className="profile__info">
-							<div className="profile__info_email">Email: </div>
-							<div className="profile__info_phone">Телефон: *номер телефона*</div>
-							<div className="profile__info_desc">Описание: </div>
+							<div className="profile__info_email">Email: {email}</div>
+							<div className="profile__info_phone">Телефон:  {phone}</div>
+							<div className="profile__info_desc">Описание: {description}</div>
 						</div>
-						<NavLink to='/profile_edit' className="profile__info_submit">Редактировать профиль</NavLink>
+						<NavLink to={urlToEdit} className="profile__info_submit">Редактировать профиль</NavLink>
 					
 				</div>
 

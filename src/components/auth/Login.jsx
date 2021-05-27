@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import './login.css'
 import Input from '../utils/Input'
-import {useDispatch} from "react-redux";
-import {setToken} from '../../reducers/tokenReducer'
+import {useDispatch, useSelector} from "react-redux";
+import {setToken} from "../../reducers/tokenReducer";
+
 
 export default function Login() {
 
@@ -10,10 +11,11 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-
+  
+  
  
 
-const getToken = () => {
+  const getToken = () => {
 
 	return async dispatch => {
 		try {
@@ -32,10 +34,10 @@ const getToken = () => {
 		})
 	})
 	.then((res) => res.json())
-	.then((user) => {
-		console.log(user.token)
-    	dispatch(setToken(user.token))	
-		console.log(user.token)
+	.then((response) => {
+    	dispatch(setToken("333"))
+		localStorage.setItem('token', response.token)
+		console.log()
 	})
 }
 	catch (e) {
@@ -44,7 +46,8 @@ const getToken = () => {
 }
 }
 
-  
+
+
 	return (
 		<div className="login">
 			<div className="login__title">Вход</div>
@@ -58,7 +61,7 @@ const getToken = () => {
 						<Input value={password} setValue={setPassword} type="password" placeholder="введите пароль"/>
 					</div>
 					</form>
-				<button className="login__button" type="submit" onClick = {() => dispatch(getToken())}>Войти</button>
+				<button className="login__button" type="submit" onClick = {() => dispatch(getToken(email, password))}>Войти</button>
 		</div>
 	)
 }
