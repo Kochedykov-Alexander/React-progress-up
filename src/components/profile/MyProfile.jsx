@@ -1,44 +1,16 @@
 import {React, useEffect, useState} from 'react'
-import {NavLink, Redirect} from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 import './profile.css'
 import {useDispatch, useSelector} from "react-redux";
 
 
-export default function Profile(props) {
+export default function MyProfile(props) {
 
 	const currentToken = localStorage.getItem('token')
-	const url = 'https://progress-up.herokuapp.com/v1/users/' + props.match.params.user_id
-	const urlCreateSubscription = 'https://progress-up.herokuapp.com/v1/subscriptions'
+	const url = 'https://progress-up.herokuapp.com/v1/users/' + props.match.params.user_id;
 	const [data, setData] = useState([]);
-	const currentUser = useSelector(state => state.user.currentUser)
-	const createSubscription = async () => {
-
-	try {
-		await fetch(urlCreateSubscription, {
-	
-			method: 'post',
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
-				'Authorization': 'Bearer ' + currentToken,
-			},
-			body: JSON.stringify(
-				{
-				 "user_id": props.match.params.user_id
-				}
-			)
-		})
-		.then((res) => res.json())
-		.then((response) => {
-			const id_response = '/users/' + response.id;
-		})
-	}
-		catch (e) {
-			console.log(e)
-		}
-	
-	}
-	
+	console.log(currentToken)
+	const currentAuth = useSelector(state => state.token)
 	
 
 	
@@ -47,48 +19,19 @@ export default function Profile(props) {
 			method: 'get',
 			headers: {
 				'Accept': 'application/json',
-						'Content-Type': 'application/json',
-						'Authorization': 'Bearer ' + currentToken
+				'Content-Type': 'application/json',
+				'Authorization': 'Bearer ' + currentToken,
 			},
 			
 		})
 		.then((res) => res.json())
 		.then((user) => {
 			setData(user)
+			console.log(currentAuth);
 		})} , [data])
 	
 		const {id, full_name, email, phone, description} = data;
 		const urlToEdit = "/users/edit/" + id;
-		
-
-	const listSubscriptions = 'https://progress-up.herokuapp.com/v1/subscriptions'
-	const [subs, setSubs] = useState([]);
-	
-
-
-	useEffect(() => {
-		fetch(listSubscriptions, {
-		   method: 'get',
-		   headers: {
-			   'Accept': 'application/json',
-					   'Content-Type': 'application/json',
-					   'Authorization': 'Bearer ' + currentToken
-		   },
-		   
-	   })
-	   .then((res) => res.json(), [subs])
-	})
-
-	let noSubs = new Boolean(true);
-
-	subs.map((sub) => {
-		if ((props.match.params.user_id == sub.entity_id) && (currentUser.id == sub.user_id)) {
-			noSubs = false;
-		}
-		
-	})
-	
-	
 	
 
 
@@ -104,15 +47,7 @@ export default function Profile(props) {
 							<div className="profile__info_phone">Телефон:  {phone}</div>
 							<div className="profile__info_desc">Описание: {description}</div>
 						</div>
-						{(currentUser.id == props.match.params.user_id) &&
 						<NavLink to={urlToEdit} className="profile__info_submit">Редактировать профиль</NavLink>
-						}
-						{!(currentUser.id == props.match.params.user_id) && (noSubs) &&
-						<NavLink to= "/subscriptions" onClick={() => createSubscription()} className="profile__info_submit">Подписаться на пользователя</NavLink>
-						}
-						{!(currentUser.id == props.match.params.user_id) && !(noSubs) &&
-						<NavLink to= "/subscriptions" onClick={() => createSubscription()} className="profile__info_submit">Отписаться от пользователя</NavLink>
-						}
 					
 				</div>
 

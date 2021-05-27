@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import './login.css'
 import Input from '../utils/Input'
 import {useDispatch, useSelector} from "react-redux";
-import {setToken} from "../../reducers/tokenReducer";
+import { auth } from "../../actions/auth";
+import { setUser } from "../../reducers/userReducer";
+import { Redirect } from 'react-router'
+import {NavLink} from "react-router-dom";
+
 
 
 export default function Login() {
@@ -11,8 +15,11 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  
-  
+  const isAuth = useSelector(state => state.user.isAuth)
+  console.log(isAuth)
+  if (isAuth) {
+  	<Redirect to="/users/2" />;	
+  }
  
 
   const getToken = () => {
@@ -35,9 +42,8 @@ export default function Login() {
 	})
 	.then((res) => res.json())
 	.then((response) => {
-    	dispatch(setToken("333"))
 		localStorage.setItem('token', response.token)
-		console.log()
+		auth();	
 	})
 }
 	catch (e) {
@@ -61,7 +67,7 @@ export default function Login() {
 						<Input value={password} setValue={setPassword} type="password" placeholder="введите пароль"/>
 					</div>
 					</form>
-				<button className="login__button" type="submit" onClick = {() => dispatch(getToken(email, password))}>Войти</button>
+				<button className="login__button" type="submit" onClick = {() => dispatch(getToken(email, password))}><NavLink to="/users/2">Войти</NavLink></button>
 		</div>
 	)
 }
