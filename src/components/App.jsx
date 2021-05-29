@@ -8,17 +8,19 @@ import Profile from './profile/Profile'
 import Profile_edit from './profile_edit/Profile_edit'
 import {useDispatch, useSelector} from "react-redux";
 import { logout } from '../reducers/tokenReducer';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Registration from './registration/Registration'
 import {auth} from '../actions/auth'
 import { Redirect } from 'react-router'
 import Subscriptions from './subscriptions/Subscriptions';
+import Modal from './modal/Modal'
 
 
 
 
 function App() {
 
+  
   const isAuth = useSelector(state => state.user.isAuth)
   const dispatch = useDispatch()
 

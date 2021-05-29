@@ -1,10 +1,22 @@
-import React from 'react'
+import {React, useState} from 'react'
 import './goal.css'
+import Modal from '../modal/Modal'
 
 
 export default function Goal() {
+
+	const [modalActive, setModalActive] = useState(false);
+
 	return (
+		
 		<div className="goAl">
+			<Modal active = {modalActive} setActive={setModalActive}>
+				<div className="modal__title">
+					Обновление прогресса
+				</div>
+				<textarea className="modal__textarea"></textarea>
+				<button type="submit" className="modal__button">Добавить</button> 
+			</Modal> 
 		<div className="goal">
 					<div className="goal__title">
 						Название цели
@@ -38,6 +50,8 @@ export default function Goal() {
 					</div>
 					<div className="goal__button">
 						<button type="submit" className="goal__button_subscribe">Подписаться на цель</button>
+						<button type="submit" className="goal__button_subscribe" onClick={() => setModalActive(true)}>Обновить прогресс</button>
+						
 					</div>
 					<div className="goal__story">
 						<div className="goal__story_date">*дата*</div>
