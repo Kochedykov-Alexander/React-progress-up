@@ -1,0 +1,46 @@
+.menu {
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	top: 50px;
+	left: 0;
+	transform: translateX(-130%);
+	transition-duration: 0.4s;
+	z-index: 50;
+}
+
+.blur {
+	width: 100%;
+	height: 100vh;
+	left: 30%;
+	backdrop-filter: blur(2px);
+	position: absolute;
+	
+}
+
+.menu.active {
+	transform: translateX(0%);
+}
+
+.menu__content {
+	width: 30%;
+	height: 100%;
+	background-color: black;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	transition-duration: 0.4s;
+}
+
+.menu__header {
+	font-size: 2rem;
+	padding: 10px;
+	color: white;
+	border-bottom: 1px solid white;
+	width: 100%;
+	text-align: center;
+}
+
+.material-icons {
+	background-color: white;
+}

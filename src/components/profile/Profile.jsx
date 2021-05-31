@@ -11,6 +11,10 @@ export default function Profile(props) {
 	const urlCreateSubscription = 'https://progress-up.herokuapp.com/v1/subscriptions'
 	const [data, setData] = useState([]);
 	const currentUser = useSelector(state => state.user.currentUser)
+	const [goals, setGoals] = useState([])
+	const [goal, setGoal] = useState([])
+	const articles = [];
+
 	const createSubscription = async () => {
 
 	try {
@@ -55,7 +59,8 @@ export default function Profile(props) {
 		.then((res) => res.json())
 		.then((user) => {
 			setData(user)
-		})} , [data])
+			setGoals(user.article_ids)
+		})} , [])
 	
 		const {id, full_name, email, phone, description} = data;
 		const urlToEdit = "/users/edit/" + id;
@@ -87,10 +92,38 @@ export default function Profile(props) {
 		}
 		
 	})
-	
-	
-	
 
+	
+	useEffect(() => {
+		
+		const fetchGoals = async (id) => {
+			await fetch('https://progress-up.herokuapp.com/v1/articles/' + id, {
+				method: 'get',
+				headers: {
+				'Accept': 'application/json',
+						'Content-Type': 'application/json',
+						'Authorization': 'Bearer ' + currentToken
+			},
+			
+		})
+		.then((res) => res.json())
+		.then((response) => {
+			setGoal(prevGoal => ([...prevGoal , { 
+				id: response.id,
+				title: response.title,
+				content: response.content,
+				user_id: response.user_id,
+				created_at: response.created_at,
+			}])
+		)})}
+		goals.forEach(elem => { 
+			fetchGoals(elem);
+		})
+	
+	}, [goals])
+
+		
+	console.log(goal)
 
 	return (
 		<div>
@@ -115,131 +148,31 @@ export default function Profile(props) {
 						}
 					
 				</div>
+				<div className="profile__photo">
+				<div class="profile__photo_img" alt=""/>
+				</div>
 
 				<div className="goals">
 					<div className="goals__items">
+						{goal.map((elem) => 
 						<div className="goal__item">
 							<div className="goal__item_name">
-								Название цели
+								{elem.title}
 							</div>
 							<div className="goal__item_update">
 								<div className="goal__item_update_title">Последнее обновление:</div>
-								<div className="goal__item_update_last">*контент последнего обновления*</div>
-								<div className="goal__item_update_date">*дата обновления*</div>
+								<div className="goal__item_update_last">{elem.content}</div>
+								<div className="goal__item_update_date">{elem.created_at.slice(0, 10)} в {elem.created_at.slice(11, 16)}</div>
 								
 							</div>
 							<NavLink to="/goal" className="goal__item_link">Перейти к цели</NavLink>
 						</div>
-						<div className="goal__item">
-							<div className="goal__item_name">
-								Название цели
-							</div>
-							<div className="goal__item_update">
-								<div className="goal__item_update_title">Последнее обновление:</div>
-								<div className="goal__item_update_last">*контент последнего обновления*</div>
-								<div className="goal__item_update_date">*дата обновления*</div>
-								
-							</div>
-							<NavLink to="/goal" className="goal__item_link">Перейти к цели</NavLink>
-						</div>
-						<div className="goal__item">
-							<div className="goal__item_name">
-								Название цели
-							</div>
-							<div className="goal__item_update">
-								<div className="goal__item_update_title">Последнее обновление:</div>
-								<div className="goal__item_update_last">*контент последнего обновления*</div>
-								<div className="goal__item_update_date">*дата обновления*</div>
-								
-							</div>
-							<NavLink to="/goal" className="goal__item_link">Перейти к цели</NavLink>
-						</div>
-						<div className="goal__item">
-							<div className="goal__item_name">
-								Название цели
-							</div>
-							<div className="goal__item_update">
-								<div className="goal__item_update_title">Последнее обновление:</div>
-								<div className="goal__item_update_last">*контент последнего обновления*</div>
-								<div className="goal__item_update_date">*дата обновления*</div>
-								
-							</div>
-							<NavLink to="/goal" className="goal__item_link">Перейти к цели</NavLink>
-						</div>
-						<div className="goal__item">
-							<div className="goal__item_name">
-								Название цели
-							</div>
-							<div className="goal__item_update">
-								<div className="goal__item_update_title">Последнее обновление:</div>
-								<div className="goal__item_update_last">*контент последнего обновления*</div>
-								<div className="goal__item_update_date">*дата обновления*</div>
-								
-							</div>
-							<NavLink to="/goal" className="goal__item_link">Перейти к цели</NavLink>
-						</div>
-						<div className="goal__item">
-							<div className="goal__item_name">
-								Название цели
-							</div>
-							<div className="goal__item_update">
-								<div className="goal__item_update_title">Последнее обновление:</div>
-								<div className="goal__item_update_last">*контент последнего обновления*</div>
-								<div className="goal__item_update_date">*дата обновления*</div>
-								
-							</div>
-							<NavLink to="/goal" className="goal__item_link">Перейти к цели</NavLink>
-						</div>
-						<div className="goal__item">
-							<div className="goal__item_name">
-								Название цели
-							</div>
-							<div className="goal__item_update">
-								<div className="goal__item_update_title">Последнее обновление:</div>
-								<div className="goal__item_update_last">*контент последнего обновления*</div>
-								<div className="goal__item_update_date">*дата обновления*</div>
-								
-							</div>
-							<NavLink to="/goal" className="goal__item_link">Перейти к цели</NavLink>
-						</div>
-						<div className="goal__item">
-							<div className="goal__item_name">
-								Название цели
-							</div>
-							<div className="goal__item_update">
-								<div className="goal__item_update_title">Последнее обновление:</div>
-								<div className="goal__item_update_last">*контент последнего обновления*</div>
-								<div className="goal__item_update_date">*дата обновления*</div>
-								
-							</div>
-							<NavLink to="/goal" className="goal__item_link">Перейти к цели</NavLink>
-						</div>
-						<div className="goal__item">
-							<div className="goal__item_name">
-								Название цели
-							</div>
-							<div className="goal__item_update">
-								<div className="goal__item_update_title">Последнее обновление:</div>
-								<div className="goal__item_update_last">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit doloribus in unde eveniet dolor excepturi, ex inventore facere libero facilis fugiat eligendi, reprehenderit, tempora aspernatur. Voluptas iste odit temporibus impedit!</div>
-								<div className="goal__item_update_date">*дата обновления*</div>
-								
-							</div>
-							<NavLink to="/goal" className="goal__item_link">Перейти к цели</NavLink>
-						</div>
-						<div className="goal__item">
-							<div className="goal__item_name">
-								Название цели
-							</div>
-							<div className="goal__item_update">
-								<div className="goal__item_update_title">Последнее обновление:</div>
-								<div className="goal__item_update_last">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate molestias cumque eum explicabo consequatur voluptatum obcaecati harum rem illum accusantium itaque tenetur iure officia cum, quibusdam ad doloremque modi in!</div>
-								<div className="goal__item_update_date">*дата обновления*</div>
-								
-							</div>
-							<NavLink to="/goal" className="goal__item_link">Перейти к цели</NavLink>
-						</div>
-					</div>
+						)}
+
+						
+						
 				</div>
+		</div>
 		</div>
 	)
 }

@@ -5,18 +5,19 @@ import './navbar.css'
 import {useDispatch, useSelector} from "react-redux";
 import { deleteUser } from '../../reducers/userReducer';
 
-function Navbar() {
-	const isAuth = useSelector(state => state.user.isAuth)
+function Navbar(props) {
+	const url = "/users/" + props.currentUser.id
+	
 	const dispatch = useDispatch()
 	return (
 		<div>
 			<div className="header">
 				<div className="header__items">
-					{!isAuth && <div className="header__item"><NavLink to="/registration">Регистрация</NavLink></div>}
-					{!isAuth && <div className="header__item"><NavLink to="/login">Вход</NavLink></div>}
+					{!props.isAuth && <div className="header__item"><NavLink to="/registration">Регистрация</NavLink></div>}
+					{!props.isAuth && <div className="header__item"><NavLink to="/login">Вход</NavLink></div>}
 
-					{isAuth && <div className="header__item"><NavLink to="/users/2">Личный кабинет</NavLink></div>}
-					{isAuth && <div className="header__item"><NavLink to="/login" onClick={() => dispatch(deleteUser())}>Выход</NavLink></div>}
+					{props.isAuth && <div className="header__item"><NavLink to={url}>Личный кабинет</NavLink></div>}
+					{props.isAuth && <div className="header__item"><NavLink to="/login" onClick={() => dispatch(deleteUser())}>Выход</NavLink></div>}
 				</div>
 			</div>
 		</div>

@@ -16,10 +16,11 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const isAuth = useSelector(state => state.user.isAuth)
-  console.log(isAuth)
-  if (isAuth) {
-  	<Redirect to="/users/2" />;	
-  }
+  const currentUser = useSelector(state => state.user.currentUser)
+  
+  
+
+  
  
 
   const getToken = () => {
@@ -55,6 +56,7 @@ export default function Login() {
 
 
 	return (
+
 		<div className="login">
 			<div className="login__title">Вход</div>
 				<form action="post" className="login__form">
@@ -67,7 +69,7 @@ export default function Login() {
 						<Input value={password} setValue={setPassword} type="password" placeholder="введите пароль"/>
 					</div>
 					</form>
-				<button className="login__button" type="submit" onClick = {() => dispatch(getToken(email, password))}><NavLink to="/users/2">Войти</NavLink></button>
+				<button className="login__button" type="submit" onClick = {() => dispatch(getToken(email, password))}><NavLink to="#">Войти</NavLink></button>
 		</div>
 	)
 }

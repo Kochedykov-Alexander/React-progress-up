@@ -1,0 +1,51 @@
+.header {
+	-ms-grid-row: 1;
+	-ms-grid-column: 1;
+	grid-area: header;
+	width: 100%;
+	background-color: #f7faff;
+	position: fixed;
+	z-index: 50;
+	display: flex;
+	align-items: center;
+	
+	
+}
+
+.burger-btn {
+	width: 50px;
+	height: 50px;
+	margin-left: 20px;
+	position: relative;
+	cursor: pointer;
+}
+
+.burger-btn::after {
+	position: absolute;
+	top: 10px;
+	content: '';
+	width: 50px;
+	height: 4px;
+	background-color: #4a4c4d;
+}
+
+.burger-btn span{
+	position: absolute;
+	top: 23px;
+	width: 50px;
+	height: 4px;
+	background-color: #4a4c4d;
+}
+
+.burger-btn::before {
+	position: absolute;
+	content: '';
+	bottom: 10px;
+	width: 50px;
+	height: 4px;
+	background-color: #4a4c4d;
+}
+
+
+  
+  
