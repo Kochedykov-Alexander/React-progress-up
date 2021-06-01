@@ -11,7 +11,7 @@ export default function Menu({header, items, active, setActive}) {
 				<ul>
 					{items.map(item => 
 						<li>
-							<a href={item.href}>{item.value}</a>
+							<a href={item.href} className="li__href">{item.value}</a>
 							<span className="material-icons">{item.icon}</span>
 						</li>	
 					)}

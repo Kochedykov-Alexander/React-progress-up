@@ -45,6 +45,7 @@ export default function Login() {
 	.then((response) => {
 		localStorage.setItem('token', response.token)
 		auth();	
+		
 	})
 }
 	catch (e) {
@@ -69,7 +70,7 @@ export default function Login() {
 						<Input value={password} setValue={setPassword} type="password" placeholder="введите пароль"/>
 					</div>
 					</form>
-				<button className="login__button" type="submit" onClick = {() => dispatch(getToken(email, password))}><NavLink to="#">Войти</NavLink></button>
+				<button className="login__button" type="submit" onClick = {() => dispatch(getToken(email, password))}>Войти</button>
 		</div>
 	)
 }

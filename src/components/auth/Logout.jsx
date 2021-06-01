@@ -7,9 +7,7 @@ export default function Logout() {
 	const dispatch = useDispatch()
 	return (
 		<div>
-			{<Redirect to="/login" from="logout"></Redirect>}
 			{dispatch(deleteUser())}
-			
 		</div>
 	)
 }

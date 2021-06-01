@@ -2,15 +2,16 @@ import {React, useEffect, useState} from 'react'
 import {NavLink, Redirect} from 'react-router-dom'
 import './subscription.css'
 import {useDispatch, useSelector} from "react-redux";
+import Sub from './Sub';
 
 export default function Subscriptions() {
 
 	const currentToken = localStorage.getItem('token')
 	const listSubscriptions = 'https://progress-up.herokuapp.com/v1/subscriptions'
-	const [data, setData] = useState([]);
+	const itemSubscribe = 'https://progress-up.herokuapp.com/v1/users/'
+	const [subscription, setSubscription] = useState([]);
+	const [user, setUser] = useState([]);
 	
-
-
 	useEffect(() => {
 		fetch(listSubscriptions, {
 		   method: 'get',
@@ -22,16 +23,51 @@ export default function Subscriptions() {
 		   
 	   })
 	   .then((res) => res.json())
-	   .then((user) => {
-		   setData(user)
-	   })} , [data])
+	   .then((response) => {
+		   setSubscription(response)
+	   })} , [])
 
-	   
+	   var obj = {};
+	let new_arr = [];
 
+	// in the end the last unique object will be considered
+	subscription.forEach(function(v){
+		obj[v['entity_id']] = v;
+	});
+	new_arr = Object.keys(obj).map(function(id) { return obj[id]; });
+
+	useEffect(() => {
+		const getDetails = async (id) => { await fetch(itemSubscribe + id, {
+		   method: 'get',
+		   headers: {
+			   'Accept': 'application/json',
+					   'Content-Type': 'application/json',
+					   'Authorization': 'Bearer ' + currentToken
+		   },
+		   
+		})
+	
+	   .then((res) => res.json())
+	   .then((response) => {
+		   setUser(user => [...user, {fullname: response.full_name, id: response.id, description: response.description}])
+	   })}
+	   new_arr.forEach((item => getDetails(item.entity_id)))
+	} , [subscription])
+
+	//console.log(user)  
+	console.log(subscription)  
+	
+	
+	
 
 	return (
 		
-			<div className="subscription__items">{data.map(d => <NavLink to="#"><div className="subscription__item"> <div>Здесь будет юзернэйм {d.entity_id}</div> {d.entity_type} <div className="time">{d.created_at}</div></div></NavLink>)}</div>
+			<div className="subscription__items">{new_arr.map(item => <NavLink to={"/" + item.entity_type.toLowerCase() + "/" + item.entity_id}>
+			<div className="subscription__item"><div>{user.map((i) => (i.id == item.entity_id) && (<div>{i.fullname}<div className="subscription_desc">Описание: {i.description}</div></div>))}</div>
+			<div className="time">{item.created_at.slice(0, 10) + " в " + item.created_at.slice(11, 16)}</div>
+			<div className="subscription_type">Тип подписки: {item.entity_type}</div>
+			
+			</div></NavLink>)}</div>
 		
 	)
 }

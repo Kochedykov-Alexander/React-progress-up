@@ -1,4 +1,6 @@
 .modal {
+	
+	
 	height: 100vh;
 	width: 100vw;
 	background-color: rgba(0, 0, 0, 0.4);
@@ -19,7 +21,9 @@
 }
 
 .modal__content {
-	padding: 20px;
+	height: 100%;
+	width: 100%;
+	padding: 40px;
 	background-repeat: 10px;
 	background-color: white;
 	height: 857px;
