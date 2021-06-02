@@ -44,7 +44,7 @@ export default function Subscriptions() {
 					   'Authorization': 'Bearer ' + currentToken
 		   },
 		   
-		})
+		},[])
 	
 	   .then((res) => res.json())
 	   .then((response) => {

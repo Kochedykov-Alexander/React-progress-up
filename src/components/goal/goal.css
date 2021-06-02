@@ -16,6 +16,8 @@
 	-webkit-box-direction: normal;
 		-ms-flex-direction: column;
 			flex-direction: column;
+			justify-content: space-between;
+			position: relative;
   }
   
   .goal__title {
@@ -87,7 +89,7 @@
 	display: -ms-grid;
 	display: grid;
 	-ms-grid-columns: 80px 1fr 70px;
-		grid-template-columns: 80px 1fr 70px;
+		grid-template-columns: 140px 1fr 70px;
 		grid-template-areas: "date name like";
 	-webkit-box-align: center;
 		-ms-flex-align: center;
@@ -129,6 +131,9 @@
 	-webkit-box-align: center;
 		-ms-flex-align: center;
 			align-items: center;
+			position: absolute;
+			top: 50px;
+			right: 60px;
   }
   
   .goal__story__likes_count {
@@ -137,8 +142,8 @@
   }
   
   .goal__story__likes_photo_img {
-	width: 33px;
-	height: 28px;
+	width: 38px;
+	height: 38px;
 	position: relative;
   }
   

@@ -1,6 +1,6 @@
 .modal {
 	
-	
+	margin-top: 100px;
 	height: 100vh;
 	width: 100vw;
 	background-color: rgba(0, 0, 0, 0.4);
@@ -13,21 +13,22 @@
 	opacity: 0;
 	pointer-events: none;
 	transition: 0.5s;
+	z-index: 50;
 }
 
 .modal.active {
 	opacity: 1;
 	pointer-events: all;
+
 }
 
 .modal__content {
 	height: 100%;
-	width: 100%;
+	
 	padding: 40px;
 	background-repeat: 10px;
 	background-color: white;
-	height: 857px;
-	width: 986px;
+	
 	transform: scale(0.5);
 	transition: 0.4s all;
 	display: grid;
