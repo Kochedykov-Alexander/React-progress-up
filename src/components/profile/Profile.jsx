@@ -2,7 +2,7 @@ import {React, useEffect, useState} from 'react'
 import {NavLink, Redirect} from 'react-router-dom'
 import './profile.css'
 import {useDispatch, useSelector} from "react-redux";
-import logo from '../../resources/img/avatar_demo.jpg'
+import logo from '../../resources/img/avatar.png'
 
 
 export default function Profile(props) {

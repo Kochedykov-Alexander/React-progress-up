@@ -351,10 +351,14 @@ useEffect(() => {
 						}
 					{!(currentUser.id ==  goal.user_id) && (noSubs) &&
 						// <button type="submit" className="goal__button_subscribe">Подписаться на цель</button>
-						<NavLink to= "/subscriptions" onClick={() => createSubscription()} className="goal__button_subscribe">Подписаться на цель</NavLink>
+						<div className="goal__button_subscribe_div">
+							<NavLink to= "/subscriptions" onClick={() => createSubscription()} className="goal__button_subscribe">Подписаться на цель</NavLink>
+						</div>
 					}
 					{!(currentUser.id ==  goal.user_id) && !(noSubs) &&
+					<div className="goal__button_subscribe_div">
 						<NavLink to= "/subscriptions" onClick={() => createSubscription()} className="goal__button_subscrib">Отписаться от цели</NavLink>
+						</div>
 					}
 					</div>
 					{progressList?.map((progress) => (
