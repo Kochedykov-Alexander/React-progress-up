@@ -42,7 +42,8 @@ function App() {
   },[isAuth])
   const [burgerActive, setBurgerActive] = useState(false);
   if (isAuth) {
-    items = [{href : "/user/" + currentUser.id, value: "Личный кабинет", icon: "login"}, {href : "/subscriptions", value: "Мои подписки", icon: "902"}, {href : "/search", value: "Поиск", icon: "search"}, {href : "/logout", value: "Выйти", icon: 'app_registration'}]
+    items = [{href : "/user/" + currentUser.id, value: "Личный кабинет", icon: "login"}, {href : "/subscriptions", value: "Мои подписки", icon: "902"}, {href : "/search", value: "Поиск", icon: "search"}
+    , {href : "/goals_list", value: "Список целей", icon: 'app_goals_list'}, {href : "/create_goal", value: "Добавить целей", icon: 'app_create_goal'}, {href : "/logout", value: "Выйти", icon: 'app_registration'}]
     
   }
   else {
@@ -86,7 +87,7 @@ function App() {
   <Route exact path='/users/edit/:id'><Profile_edit user={currentUser}/></Route>
   <Route path='/create_goal' component={CreateGoal}></Route>
   <Route path='/goals_list' component={GoalsList}></Route>
-  <Route path='/goal/:id' component={Goal}></Route>
+  <Route path='/article/:id' component={Goal}></Route>
 
 </Switch>
 

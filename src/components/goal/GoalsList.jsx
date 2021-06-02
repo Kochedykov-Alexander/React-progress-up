@@ -35,13 +35,6 @@ export default function GoalList() {
 
 	return (
         <div>
-		        <div class="search">
-					<form action="post" class="search__form">
-						<input type="text" class="search__form_input"/>
-						<button type="submit" class="search__form_submit">Поиск</button>
-					</form>
-					
-				</div>
 
 				<div class="goals">
 					<div class="goals__items">
@@ -77,7 +70,7 @@ function GoalCard(props) {
             <div class="goal__item_update_date">{goal.created_at}</div>
             
         </div>
-        <a href={"/goal/" + goal.id} class="goal__item_link">Перейти к цели</a>
+        <a href={"/article/" + goal.id} class="goal__item_link">Перейти к цели</a>
         </div>
 
     );

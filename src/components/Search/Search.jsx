@@ -49,7 +49,7 @@ export default function Search() {
 								<div className="goal__item_update_date">{elem.created_at.slice(0, 10)} в {elem.created_at.slice(11, 16)}</div>
 								
 							</div>
-							<NavLink to="/goal" className="goal__item_link">Перейти к цели</NavLink>
+							<NavLink to={"/article/"+ elem.id} className="goal__item_link">Перейти к цели</NavLink>
 						</div>
 						
 				))}

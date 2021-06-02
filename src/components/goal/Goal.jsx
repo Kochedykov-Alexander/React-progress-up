@@ -104,7 +104,7 @@ useEffect(() => {
 	
 	   .then((res) => res.json())
 	   .then((response) => {
-		   setAuthor(author => [...author, {comment_id: comment_id, full_name: response.full_name, id: response.id, content: comment_content, created_at: comment_time}])
+		   setAuthor(author => [...author, {comment_id: comment_id, full_name: response.full_name, id: response.id, content: comment_content, created_at: comment_time }])
 	   })}
 	   comments.forEach((item => getDetails(item.id, item.user_id, item.content, item.created_at)))
 	//    let sorted_arr = author;
@@ -271,6 +271,62 @@ useEffect(() => {
 	  }
 
 
+	  const [subscription, setSubscription] = useState([])
+
+	  const createSubscription = async () => {
+  
+	  try {
+		  await fetch(urlCreateSubscription, {
+	  
+			  method: 'post',
+			  headers: {
+				  'Accept': 'application/json',
+				  'Content-Type': 'application/json',
+				  'Authorization': 'Bearer ' + currentToken,
+			  },
+			  body: JSON.stringify(
+				  {
+				   "user_id": props.match.params.user_id
+				  }
+			  )
+		  })
+		  .then((res) => res.json())
+		  .then((response) => {
+			  const id_response = '/users/' + response.id;
+		  })
+	  }
+		  catch (e) {
+			  console.log(e)
+		  }
+	  
+	  }
+		  
+	  const urlCreateSubscription = 'https://progress-up.herokuapp.com/v1/subscriptions'
+	  const listSubscriptions = 'https://progress-up.herokuapp.com/v1/subscriptions'
+	  const [subs, setSubs] = useState([]);
+	  
+  
+  
+	  useEffect(() => {
+		  fetch(listSubscriptions, {
+			 method: 'get',
+			 headers: {
+				 'Accept': 'application/json',
+						 'Content-Type': 'application/json',
+						 'Authorization': 'Bearer ' + currentToken
+			 },
+			 
+		 })
+		 .then((res) => res.json())
+		 .then((response) => {
+			 setSubscription(response)
+		 })} , [subs])
+  
+	  var noSubs = new Boolean(true);
+  
+	  subscription.map((sub) => ((props.match.params.id == sub.entity_id) && (currentUser.id == sub.user_id)) ? noSubs = false : null)
+	  
+
 	return (
 		
 		<div className="goAl">
@@ -290,8 +346,16 @@ useEffect(() => {
 					</div>
 					<LikeDiv isLiked={likeMark} />
 					<div className="goal__button">
-						<button type="submit" className="goal__button_subscribe">Подписаться на цель</button>
+					{(currentUser.id == goal.user_id) &&
 						<button type="submit" className="goal__button_subscribe" onClick={() => setModalActive(true)}>Обновить прогресс</button>
+						}
+					{!(currentUser.id ==  goal.user_id) && (noSubs) &&
+						// <button type="submit" className="goal__button_subscribe">Подписаться на цель</button>
+						<NavLink to= "/subscriptions" onClick={() => createSubscription()} className="goal__button_subscribe">Подписаться на цель</NavLink>
+					}
+					{!(currentUser.id ==  goal.user_id) && !(noSubs) &&
+						<NavLink to= "/subscriptions" onClick={() => createSubscription()} className="goal__button_subscrib">Отписаться от цели</NavLink>
+					}
 					</div>
 					{progressList?.map((progress) => (
 									<ProgressCard
@@ -315,6 +379,7 @@ useEffect(() => {
 										created_at={comm.created_at.substring(0, 10)}
 										user={comm.full_name}
 										key={comm.comment_id}
+										user_id={comm.id}
 									/>
 								))}
 
@@ -338,7 +403,7 @@ function CommentCard(props) {
 		<div className="comments__item">
 		<div className="comments__item__info">
 			<div className="comments__item__info_name">
-				{comm.user}
+			<NavLink to={"/user/" + comm.user_id} className="profile__info_submit">{comm.user}</NavLink>
 			</div>
 			<div className="comments__item__info_date">
 				{comm.created_at}
