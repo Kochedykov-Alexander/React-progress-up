@@ -89,13 +89,16 @@
   .goals {
 	background: #f7faff;
 	margin-top: 27px;
-	width: 1325px;
+	min-width: 1325px;
 	height: auto;
-	padding: 57px 76px;
+	
 	border: 0.15px solid gray;
 	-webkit-box-sizing: border-box;
 			box-sizing: border-box;
 	border-radius: 10px;
+
+	
+	
   }
   
   .goals__items {
@@ -106,9 +109,13 @@
 	-webkit-column-gap: 120px;
 			column-gap: 120px;
 	row-gap: 59px;
+	justify-content: center;
+	padding: 30px 0;
+	
   }
   
   .goal__item {
+	word-break: break-all;
 	border: 0.15px solid gray;
 	-webkit-box-sizing: border-box;
 			box-sizing: border-box;
@@ -116,9 +123,11 @@
 	display: -ms-grid;
 	display: grid;
 	-ms-grid-rows: 67px 1fr 47px;
-		grid-template-rows: 67px 1fr 47px;
+		grid-template-rows: auto 1fr 47px;
+		row-gap: 10px;
 		grid-template-areas: "name" "update" "button";
 	grid-auto-flow: row;
+	
 	padding: 40px 40px 45px 40px;
 	border-radius: 10px;
 	justify-items: center;
@@ -179,5 +188,20 @@
 		 -o-transition-duration: 1s;
 			transition-duration: 1s;
 	background: #8799C6;
+  }
+
+  .profile__photo_img {
+	  position: relative;
+	 
+	  border-radius: 50%;
+	 
+	 
+  }
+
+  .profile__photo_img img{
+	  position: absolute;
+	  top: 0;
+	  left: 0;
+	  object-fit: cover;
   }
   

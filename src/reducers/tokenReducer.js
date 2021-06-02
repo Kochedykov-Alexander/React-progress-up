@@ -9,6 +9,7 @@ export const defaultState = {
 export default function tokenReducer(state = defaultState, action) {
     switch (action.type) {
         case SET_TOKEN: 
+        localStorage.setItem('token')
         return {
             ...state, 
             currentToken: action.payload,
@@ -29,3 +30,4 @@ export default function tokenReducer(state = defaultState, action) {
 export const setToken = (token) => ({type: SET_TOKEN, payload: token})
 
 export const logout = () => ({type: LOGOUT})
+

@@ -255,3 +255,37 @@
 	font-size: 20px;
 	line-height: 23px;
   }
+
+  .modal__title {
+	font-weight: bold;
+	font-size: 42px;
+	line-height: 49px;
+	display: flex;
+	text-align: center;
+	
+  }
+
+  .modal__textarea {
+	  min-height: 200px;
+	  width: 100%;
+	  border: 1px solid grey;
+	  border-radius: 10px;
+  }
+
+  .modal__button {
+	transition: 1s;
+	width: 147px;
+	height: 73px;
+	background: #B4BED7;
+	font-weight: bold;
+	font-size: 20px;
+	line-height: 23px;
+	border-radius: 10px;
+	color: #FFFFFF;
+	margin-top: 200px;
+  }
+
+  .modal__button:hover {
+	  background: #8799C6;
+	  transition: 1s all;
+  }

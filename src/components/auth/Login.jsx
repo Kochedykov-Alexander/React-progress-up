@@ -2,7 +2,12 @@ import React, { useEffect, useState } from "react";
 import './login.css'
 import Input from '../utils/Input'
 import {useDispatch, useSelector} from "react-redux";
-import {setToken} from '../../reducers/tokenReducer'
+import { auth } from "../../actions/auth";
+import { setUser } from "../../reducers/userReducer";
+import { Redirect } from 'react-router'
+import {NavLink} from "react-router-dom";
+
+
 
 export default function Login() {
 
@@ -10,10 +15,15 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
+  const isAuth = useSelector(state => state.user.isAuth)
+  const currentUser = useSelector(state => state.user.currentUser)
+  
+  
 
+  
  
 
-const getToken = () => {
+  const getToken = () => {
 
 	return async dispatch => {
 		try {
@@ -33,9 +43,9 @@ const getToken = () => {
 	})
 	.then((res) => res.json())
 	.then((response) => {
-    	dispatch(setToken("333"))
 		localStorage.setItem('token', response.token)
-		console.log()
+		auth();	
+		
 	})
 }
 	catch (e) {
@@ -44,8 +54,10 @@ const getToken = () => {
 }
 }
 
-  
+
+
 	return (
+
 		<div className="login">
 			<div className="login__title">Вход</div>
 				<form action="post" className="login__form">

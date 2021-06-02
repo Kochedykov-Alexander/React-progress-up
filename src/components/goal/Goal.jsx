@@ -3,15 +3,20 @@ import {NavLink} from 'react-router-dom'
 import './goal.css'
 import {useDispatch, useSelector} from "react-redux";
 import Input from '../utils/Input'
+import Modal from '../modal/Modal'
+import like from '../../resources/img/like.png'
+import unlike from '../../resources/img/unlike.png'
 
 
 export default function Goal(props) {
 
+	const [modalActive, setModalActive] = useState(false);
     const currentToken = localStorage.getItem('token')
 	const url = 'https://progress-up.herokuapp.com/v1/articles/' + props.match.params.id;
     const [goal, setGoal] = useState([]);
 	const [comment, setComment] = useState("");
-  function getGoal() {
+
+	useEffect(() => {
   
       fetch(url, {
   
@@ -24,11 +29,10 @@ export default function Goal(props) {
       })
       .then((res) => res.json())
         .then((result) => setGoal(result)) 
-  }
+	}, [goal])
 
   async function createComment() {
 	try {
-	console.log(currentToken)
 	await fetch('https://progress-up.herokuapp.com/v1/comments', {
 
 		method: 'post',
@@ -44,87 +48,273 @@ export default function Goal(props) {
 			}
 		})
 	})
-	.then(res => {
-		console.log(res)
-		console.log(res.json());
-	  })
+	.then((res) => res.json())
+	.then((response) => {
+	   setComments(comments => [...comments, {id: response.id, content: response.content, user_id: response.user_id, created_at: response.created_at, article_id: response.article_id} ])})
+	   setComment('')
 }	catch (e) {
 	console.log(e)
 }
   }
 
-  useEffect(() => {
-    getGoal();
-  }, [goal])
-
   const [comments, setComments] = useState([]);
+  const [author, setAuthor] = useState([]);
+  const [progressList, setProgressList] = useState([]);
 
-  async function getCommentsList() {
-  
-      await fetch('https://progress-up.herokuapp.com/v1/comments?article_id=' + props.match.params.id, {
-  
-          method: 'get',
-          headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + currentToken,
-          }
-      })
-      .then((res) => res.json())
-        .then((result) => setComments(result)) 
-  }
+useEffect(() => {
 
-  useEffect(() => {
-    getCommentsList();
+	fetch('https://progress-up.herokuapp.com/v1/comments?article_id=' + props.match.params.id, {
+
+		method: 'get',
+		headers: {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json',
+			'Authorization': 'Bearer ' + currentToken,
+		}
+	})
+	.then((res) => res.json())
+		.then((res) => setComments(res))
   }, []);
 
-  const {id, title, content, user_id, created_at} = goal;
+	// let new_arr = comments;
+
+	function smallestToBiggest(a, b) {
+		// var dateA=new Date(a.created_at), dateB=new Date(b.created_at)
+		// return dateA-dateB
+		return a.comment_id - b.comment_id
+	  }
+	  
+	  function biggestToSmallest(a, b) {
+		// var dateA=new Date(a.created_at), dateB=new Date(b.created_at)
+		// return dateB-dateA
+		return b.comment_id - a.comment_id
+	  }
+
+	useEffect(() => {
+		setAuthor([])
+		const getDetails = async (comment_id, id, comment_content, comment_time) => { await fetch("https://progress-up.herokuapp.com/v1/users/" + id, {
+		   method: 'get',
+		   headers: {
+			   'Accept': 'application/json',
+					   'Content-Type': 'application/json',
+					   'Authorization': 'Bearer ' + currentToken
+		   },
+		   
+		})
+	
+	   .then((res) => res.json())
+	   .then((response) => {
+		   setAuthor(author => [...author, {comment_id: comment_id, full_name: response.full_name, id: response.id, content: comment_content, created_at: comment_time}])
+	   })}
+	   comments.forEach((item => getDetails(item.id, item.user_id, item.content, item.created_at)))
+	//    let sorted_arr = author;
+	//    sorted_arr.sort(biggestToSmallest)
+	//    setAuthor(sorted_arr)
+	} , [comments])
+
+	useEffect(() => {
+  
+		fetch('https://progress-up.herokuapp.com/v1/progress_informations?article_id=' + props.match.params.id, {
+	
+			method: 'get',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'Authorization': 'Bearer ' + currentToken,
+			}
+		})
+		.then((res) => res.json())
+			.then((res) => setProgressList(res))
+
+	}, [progressList]);
+
+
+	  const [progress, setProgress] = useState("");
+
+	  async function createProgress() {
+		try {
+		await fetch('https://progress-up.herokuapp.com/v1/progress_informations', {
+	
+			method: 'post',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'Authorization': 'Bearer ' + currentToken,
+			},
+			body: JSON.stringify({
+				"progress_information": {
+				  "article_id": props.match.params.id,
+				  "content": progress,
+				  "amount": 15000
+				}
+			})
+		})
+		.then(res => {
+			console.log(res)
+			console.log(res.json());
+		  })
+	}	catch (e) {
+		console.log(e)
+	}
+	  }
+
+	  const [likeMark, setLikeMark] = useState(0);
+	  async function createLike() {
+		try {
+		await fetch('https://progress-up.herokuapp.com/v1/likes', {
+	
+			method: 'post',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'Authorization': 'Bearer ' + currentToken,
+			},
+			body: JSON.stringify({
+				"like": {
+				  "article_id": props.match.params.id
+				}
+			})
+		})
+		.then(res => {
+			console.log(res)
+			console.log(res.json());
+			setLikeMark(1)
+		  })
+	}	catch (e) {
+		console.log(e)
+	}
+	  }
+
+	  async function deleteLike() {
+		try {
+		await fetch('https://progress-up.herokuapp.com/v1/likes/' + likeId, {
+	
+			method: 'delete',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'Authorization': 'Bearer ' + currentToken,
+			},
+			body: JSON.stringify({		
+				"article_id": props.match.params.id
+			})
+		})
+		.then(res => {
+			console.log(res)
+			console.log(res.json());
+			setLikeMark(0)
+		  })
+	}	catch (e) {
+		console.log(e)
+	}
+	  }
+
+	  const [likes, setLikes] = useState([]);
+	  useEffect(() => {
+
+		fetch('https://progress-up.herokuapp.com/v1/likes?article_id=' + props.match.params.id, {
+	
+			method: 'get',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'Authorization': 'Bearer ' + currentToken,
+			}
+		})
+		.then((res) => res.json())
+			.then((res) => setLikes(res))
+	  }, [likes]);
+
+	
+	const currentUser = useSelector(state => state.user.currentUser)
+
+	const [likeId, setLikeId] = useState()
+
+	useEffect(() => {
+		try {
+		likes.map((like) => {
+			if (like.user_id == currentUser.id) {
+				setLikeMark(1)
+				setLikeId(like.id)
+			}
+		})
+	}	catch (e) {
+		console.log(e)
+	}
+	}, [likes])
+
+	  function LikeDiv(props) {
+		const [isLiked ] = useState(props);
+		if (isLiked.isLiked == 1) {
+		  	return <Like />
+		} else if (isLiked.isLiked == 0) {
+		return <Unlike />
+		}
+	  }
+
+	  function Like(props) {
+		return (
+			<div className="goal__story__likes">
+				<div className="goal__story__likes_count">{likes.length}</div>
+				<div className="goal__story__likes_photo"><button  onClick={deleteLike}><img src={like} alt="" className="goal__story__likes_photo_img"/></button></div>
+			</div>
+		)
+	  }
+	  
+	  function Unlike(props) {
+		return (
+			<div className="goal__story__likes">
+				<div className="goal__story__likes_count">{likes.length}</div>
+				<div className="goal__story__likes_photo"><button  onClick={createLike}><img src={unlike} alt="" className="goal__story__likes_photo_img"/></button></div>
+			</div>
+		)
+	  }
+
 
 	return (
 		<div className="goAl">
+			<Modal active = {modalActive} setActive={setModalActive}>
+				<div className="modal__title">
+					Обновление прогресса
+				</div>
+				<Input value={progress} setValue={setProgress} className="modal__textarea" type="text" />
+						<button type="submit" className="modal__button" onClick = {createProgress}>Добавить</button>
+			</Modal> 
 		<div className="goal">
 					<div className="goal__title">
-						{title}
+						{goal.title}
 					</div>
 					<div className="goal__desc">
-						content
+						{goal.content}
 					</div>
+					<LikeDiv isLiked={likeMark} />
 					<div className="goal__button">
 						<button type="submit" className="goal__button_subscribe">Подписаться на цель</button>
+						<button type="submit" className="goal__button_subscribe" onClick={() => setModalActive(true)}>Обновить прогресс</button>
 					</div>
-					<div className="goal__story">
-						<div className="goal__story_date">*дата*</div>
-						<div className="goal__story_name">последнее обновление</div>
-						<div className="goal__story__likes">
-							<div className="goal__story__likes_count">52</div>
-							<div className="goal__story__likes_photo"><a href=""><img src="/goal/img/Без названия 1.png" alt="" className="goal__story__likes_photo_img"/></a></div>
-						</div>
-					</div>
-					<div className="goal__story">
-						<div className="goal__story_date">*дата*</div>
-						<div className="goal__story_name">последнее обновление</div>
-						<div className="goal__story__likes">
-							<div className="goal__story__likes_count">52</div>
-							<div className="goal__story__likes_photo"><a href=""><img src="/goal/img/Без названия 2.png" alt="" className="goal__story__likes_photo_img"/></a></div>
-						</div>
-					</div>
+					{progressList?.map((progress) => (
+									<ProgressCard
+										content={progress.content}
+										created_at={progress.created_at.substring(0, 10)}
+										key={progress.id}
+									/>
+								))}
 				</div>
 
 				<div className="comments">
 					<div className="comments__form">
-						<Input value={comment} setValue={setComment} className="comments__form_input" type="text" />
+						<Input id="comment_input" value={comment} setValue={setComment} className="comments__form_input" type="text" />
 						<button type="submit" className="comments__form_submit" onClick = {createComment}>Отправить</button>
 					</div>
 
 					<div className="comments__items">
-							{comments?.map((comm) => (
+							{author.sort(biggestToSmallest).map((comm) => (
 									<CommentCard
 									content={comm.content}
 										created_at={comm.created_at.substring(0, 10)}
-										user={comm.user_id}
-										id={comm.id}
+										user={comm.full_name}
+										key={comm.comment_id}
 									/>
-
 								))}
 
 					</div>
@@ -154,6 +344,19 @@ function CommentCard(props) {
 			</div>
 		</div>
 		<div className="comments__item__text">{comm.content}</div>
+	</div>
+
+    );
+  }
+
+
+  function ProgressCard(props) {
+    const [progress ] = useState(props);
+    return (
+
+	<div className="goal__story">
+	<div className="goal__story_date">{progress.created_at}</div>
+	<div className="goal__story_name">{progress.content}</div>
 	</div>
 
     );

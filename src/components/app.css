@@ -93,7 +93,7 @@ body {
 }
 
 .container {
-  max-width: 1286px;
+  min-width: 1286px;
   margin: 0 auto;
   height: 100%;
 }
