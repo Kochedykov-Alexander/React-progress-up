@@ -1,6 +1,5 @@
 import '../components/app.css';
 import {BrowserRouter, Route, Switch} from "react-router-dom"
-import Navbar from './navbar/Navbar'
 import Login from './auth/Login';
 import Goal from './goal/Goal'
 import CreateGoal from './goal/CreateGoal'
@@ -12,60 +11,85 @@ import Registration from './registration/Registration'
 import {auth} from '../actions/auth'
 import { Redirect } from 'react-router'
 import Subscriptions from './subscriptions/Subscriptions';
-import Modal from './modal/Modal'
-import Navbars from './navbar/Navbars';
+import Navbar from './navbar/Navbar';
 import Menu from './navbar/Menu';
 import Logout from './auth/Logout';
+import Search from './Search/Search'
 import GoalsList from './goal/GoalsList'
+
+
+
+
+
 
 function App() {
 
+  
   const isAuth = useSelector(state => state.user.isAuth)
   const currentUser = useSelector(state => state.user.currentUser)
-  const dispatch = useDispatch()
   var items = null;
+  const dispatch = useDispatch()
   
+  
+  
+  
+  
+  
+  useEffect(() => {
+    dispatch(auth())
+   
+
+  },[isAuth])
+  const [burgerActive, setBurgerActive] = useState(false);
   if (isAuth) {
-    items = [{href : "/user/" + currentUser.id, value: "Личный кабинет", icon: "login"}, {href : "/subscriptions", value: "Мои подписки", icon: "902"}, {href : "/logout", value: "Выйти", icon: 'app_registration'}]
+    items = [{href : "/user/" + currentUser.id, value: "Личный кабинет", icon: "login"}, {href : "/subscriptions", value: "Мои подписки", icon: "902"}, {href : "/search", value: "Поиск", icon: "search"}, {href : "/logout", value: "Выйти", icon: 'app_registration'}]
+    
   }
   else {
     items = [{href : "/login", value: "Логин", icon: "login"}, {href : "/registration", value: "Регистрация", icon: 'app_registration'}]
   }
-  
-
-  const [burgerActive, setBurgerActive] = useState(false);
-  
-  useEffect(() => {
-    dispatch(auth())
-  }, [])
 
   return (
+
+  
     
     <BrowserRouter>
-    {/* <Navbar isAuth={isAuth} currentUser={currentUser}/> */}
-
-    <Navbars active={burgerActive} setActive={setBurgerActive}/>
+    <Navbar active={burgerActive} setActive={setBurgerActive}/>
     <Menu header="Progress Up" items={items} active={burgerActive} setActive={setBurgerActive}/>
     <div className="wrapper">
-      <div className="container">
+     
 		    <div className="content">
-        {!isAuth &&
-          <Switch>
-             <Route exact path='/login' component={Login}></Route>
-             <Redirect exact from='/' to="/login" />
-          </Switch>
-        }
+        <div className="container">
+       
+{!isAuth &&
+  
     <Switch>
-        <Route path='/logout' component={Logout}></Route>
-        <Route path='/goals/:id' component={Goal}></Route>
-        <Route exact path='/user/:user_id' component={Profile}></Route>
-        <Route exact path='/subscriptions'  component={Subscriptions}></Route>
-        <Route exact path='/users/edit/:id' exact component={Profile_edit}></Route>
-        <Route path='/registration' component={Registration}></Route>  
-        <Route path='/create_goal' component={CreateGoal}></Route>
-        <Route path='/goals_list' component={GoalsList}></Route>
-        <Route path='/goal/:id' component={Goal}></Route>
-   </Switch>
+       <Route exact path='/login' component={Login}></Route>
+       <Route exact path='/registration' component={Registration}></Route>
+       <Redirect exact from='/' to="/login" />
+       <Redirect exact from='/logout' to="/login" />
+    </Switch>
+  }
+
+  {isAuth &&
+  <Switch>
+    <Redirect to={"/user/" + currentUser.id} from="/login"></Redirect>
+  </Switch>
+  }
+
+<Switch>
+  <Route path='/logout' component={Logout}></Route>
+  <Route path='/search' component={Search}></Route>
+  <Route path='/goals/:id' component={Goal}></Route>
+  <Route exact path='/user/:user_id'  component={Profile}></Route>
+  <Route exact path='/subscriptions'  component={Subscriptions}></Route>
+  <Route exact path='/users/edit/:id'><Profile_edit user={currentUser}/></Route>
+  <Route path='/create_goal' component={CreateGoal}></Route>
+  <Route path='/goals_list' component={GoalsList}></Route>
+  <Route path='/goal/:id' component={Goal}></Route>
+
+</Switch>
+
     </div>
       </div>
         </div>

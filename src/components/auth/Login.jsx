@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import './login.css'
 import Input from '../utils/Input'
 import {useDispatch, useSelector} from "react-redux";
@@ -14,15 +14,16 @@ export default function Login() {
   
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const dispatch = useDispatch();
-  const isAuth = useSelector(state => state.user.isAuth)
+
+  const user = useSelector(state => state.user.isAuth)
+  const dispatch = useDispatch()
   const currentUser = useSelector(state => state.user.currentUser)
-  
-  
+  const [state, setState] = useState(false)
+ 
 
   
  
-
+ 
   const getToken = () => {
 
 	return async dispatch => {
@@ -44,7 +45,8 @@ export default function Login() {
 	.then((res) => res.json())
 	.then((response) => {
 		localStorage.setItem('token', response.token)
-		auth();	
+		dispatch(auth());	
+		
 		
 	})
 }
@@ -53,6 +55,12 @@ export default function Login() {
 	}
 }
 }
+
+
+
+
+	
+
 
 
 
@@ -70,7 +78,7 @@ export default function Login() {
 						<Input value={password} setValue={setPassword} type="password" placeholder="введите пароль"/>
 					</div>
 					</form>
-				<button className="login__button" type="submit" onClick = {() => dispatch(getToken(email, password))}>Войти</button>
+				<button className="login__button" type="submit" onClick = {() => (dispatch(getToken(email, password)))}>Войти</button>
 		</div>
 	)
 }

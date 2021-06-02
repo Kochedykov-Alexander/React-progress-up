@@ -5,9 +5,12 @@ import {NavLink, Redirect} from "react-router-dom";
 
 export default function Logout() {
 	const dispatch = useDispatch()
+
+	
 	return (
+	
 		<div>
-			{dispatch(deleteUser())}
+			
 		</div>
 	)
 }

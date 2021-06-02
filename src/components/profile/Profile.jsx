@@ -2,6 +2,7 @@ import {React, useEffect, useState} from 'react'
 import {NavLink, Redirect} from 'react-router-dom'
 import './profile.css'
 import {useDispatch, useSelector} from "react-redux";
+import logo from '../../resources/img/avatar_demo.jpg'
 
 
 export default function Profile(props) {
@@ -13,7 +14,7 @@ export default function Profile(props) {
 	const currentUser = useSelector(state => state.user.currentUser)
 	const [goals, setGoals] = useState([])
 	const [goal, setGoal] = useState([])
-	const articles = [];
+	const [subscription, setSubscription] = useState([])
 
 	const createSubscription = async () => {
 
@@ -81,17 +82,16 @@ export default function Profile(props) {
 		   },
 		   
 	   })
-	   .then((res) => res.json(), [subs])
-	})
+	   .then((res) => res.json())
+	   .then((response) => {
+		   setSubscription(response)
+	   })} , [subs])
 
-	let noSubs = new Boolean(true);
+	var noSubs = new Boolean(true);
 
-	subs.map((sub) => {
-		if ((props.match.params.user_id == sub.entity_id) && (currentUser.id == sub.user_id)) {
-			noSubs = false;
-		}
-		
-	})
+	subscription.map((sub) => ((props.match.params.user_id == sub.entity_id) && (currentUser.id == sub.user_id)) ? noSubs = false : null)
+	
+	
 
 	
 	useEffect(() => {
@@ -123,10 +123,13 @@ export default function Profile(props) {
 	}, [goals])
 
 		
+
+		
 	console.log(goal)
 
 	return (
-		<div>
+		<div className="profile_and_goals">
+			<div className="profile_and_photo">
 			<div className="profile">
 					<div className="profile__name">
 						{full_name} 
@@ -138,7 +141,7 @@ export default function Profile(props) {
 							<div className="profile__info_desc">Описание: {description}</div>
 						</div>
 						{(currentUser.id == props.match.params.user_id) &&
-						<NavLink to={urlToEdit} className="profile__info_submit">Редактировать профиль</NavLink>
+						<NavLink to={urlToEdit} className="profile__info_submit">Изменить пароль и личные данные</NavLink>
 						}
 						{!(currentUser.id == props.match.params.user_id) && (noSubs) &&
 						<NavLink to= "/subscriptions" onClick={() => createSubscription()} className="profile__info_submit">Подписаться на пользователя</NavLink>
@@ -148,9 +151,12 @@ export default function Profile(props) {
 						}
 					
 				</div>
-				<div className="profile__photo">
-				<div class="profile__photo_img" alt=""/>
+					<div className="profile__photo">
+					<div class="profile__photo_img" alt=""><img src={logo} alt=""/></div>
 				</div>
+				</div>
+				
+				
 
 				<div className="goals">
 					<div className="goals__items">

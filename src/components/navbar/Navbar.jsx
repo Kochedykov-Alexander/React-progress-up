@@ -1,27 +1,13 @@
 import React from 'react'
-import {NavLink} from "react-router-dom";
-import { logout } from '../../reducers/tokenReducer';
 import './navbar.css'
-import {useDispatch, useSelector} from "react-redux";
-import { deleteUser } from '../../reducers/userReducer';
 
-function Navbar(props) {
-	const url = "/users/" + props.currentUser.id
-	
-	const dispatch = useDispatch()
+export default function Navbars({active, setActive}) {
 	return (
-		<div>
-			<div className="header">
-				<div className="header__items">
-					{!props.isAuth && <div className="header__item"><NavLink to="/registration">Регистрация</NavLink></div>}
-					{!props.isAuth && <div className="header__item"><NavLink to="/login">Вход</NavLink></div>}
-
-					{props.isAuth && <div className="header__item"><NavLink to={url}>Личный кабинет</NavLink></div>}
-					{props.isAuth && <div className="header__item"><NavLink to="/login" onClick={() => dispatch(deleteUser())}>Выход</NavLink></div>}
-				</div>
+		<div className="header">
+			<div className="burger-btn" onClick={() => setActive(!active)}>
+				<span/>
 			</div>
 		</div>
 	)
 }
 
-export default Navbar;

@@ -1,100 +1,36 @@
-.profile_edit {
-	background-color: #f7faff;
-	padding: 45px 0 50px 50px;
-	width: 1317px;
-	height: auto;
-	border: 0.15px solid gray;
-	border-radius: 10px;
+input {
+	
+	border: #566885 solid 3px;
+	width: 250px;
+	padding: 20px;
+	height: 200px;
   }
-  
-  .profile_edit_input {
-	width: 410px;
-	height: 82px;
-	font-weight: bold;
-	font-size: 48px;
-	line-height: 56px;
-	border: 0.15px solid gray;
-	border-radius: 10px;
+  input:focus {
+	outline: none;
+	transform: scale(1.01);
   }
-  
-  .profile_edit_info {
-	margin-top: 21px;
-	font-size: 22px;
-	line-height: 26px;
+  ::-webkit-input-placeholder {
+	/* Chrome */
+	color: #566885;
+	font-weight: 400;
   }
-  
-  .profile_edit_email {
-	margin-top: 21px;
-	font-size: 18px;
-	line-height: 21px;
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: flex;
+  :-ms-input-placeholder {
+	/* IE 10+ */
+	color: #566885;
+	font-weight: 400;
   }
-  
-  .profile_edit_email_input {
-	margin-left: 5px;
-	border: 0.15px solid gray;
-	border-radius: 10px;
+  ::-moz-placeholder {
+	/* Firefox 19+ */
+	color: #566885;
+	font-weight: 400;
   }
-  
-  .profile_edit_phone {
-	font-size: 18px;
-	line-height: 21px;
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: flex;
-	margin-top: 19px;
+  :-moz-placeholder {
+	/* Firefox 4 - 18 */
+	color: #566885;
+	font-weight: 400;
   }
-  
-  .profile_edit_phone_input {
-	margin-left: 5px;
-	border: 0.15px solid gray;
-	border-radius: 10px;
-  }
-  
-  .profile_edit_desc {
-	font-size: 22px;
-	line-height: 26px;
-  }
-  
-  .profile_edit_desc_text {
-	margin-top: 24px;
-  }
-  
-  .profile_edit_desc_input {
-	border: 0.15px solid gray;
-	width: 986px;
-	padding-bottom: 100px;
-	margin-top: 20px;
-	border-radius: 10px;
-  }
-  
-  .profile_edit_button {
-	margin-top: 40px;
-	width: 205px;
-	height: 57px;
-	background-color: #5444fc;
-	-webkit-transition-duration: 1s;
-		 -o-transition-duration: 1s;
-			transition-duration: 1s;
-	font-weight: bold;
-	font-size: 18px;
-	line-height: 21px;
-	color: #ffffff;
-	border-radius: 10px;
-  }
-  
-  .profile_edit_button:hover {
-	-webkit-transition-duration: 1s;
-		 -o-transition-duration: 1s;
-			transition-duration: 1s;
-	background-color: #8799C6;
-  }
-  
-  input {
-	padding: 0;
-  }
+
+
   
   
   

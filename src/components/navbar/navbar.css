@@ -2,41 +2,50 @@
 	-ms-grid-row: 1;
 	-ms-grid-column: 1;
 	grid-area: header;
+	width: 100%;
 	background-color: #f7faff;
-	position: -webkit-sticky;
-	position: sticky;
-	top: 0px;
-  }
-  
-  .header__items {
-	display: -ms-grid;
-	display: grid;
-	-ms-grid-columns: 315px 118px;
-		grid-template-columns: 315px 118px;
-	-webkit-column-gap: 37px;
-			column-gap: 37px;
-	-webkit-box-pack: end;
-		-ms-flex-pack: end;
-			justify-content: end;
-	-ms-flex-line-pack: center;
-		align-content: center;
-	padding: 35px 37px 31px 0;
-  }
+	position: fixed;
+	z-index: 50;
+	display: flex;
+	align-items: center;
+	
+	
+}
 
-  .header__item a {
-	line-height: 40px;
-	font-weight: bold;
-	font-size: 34px;
-	color: #4a4c4d !important;
-	-webkit-transition-duration: 1s;
-		 -o-transition-duration: 1s;
-			transition-duration: 1s;
-  }
+.burger-btn {
+	width: 50px;
+	height: 50px;
+	margin-left: 20px;
+	position: relative;
+	cursor: pointer;
+}
+
+.burger-btn::after {
+	position: absolute;
+	top: 10px;
+	content: '';
+	width: 50px;
+	height: 4px;
+	background-color: #4a4c4d;
+}
+
+.burger-btn span{
+	position: absolute;
+	top: 23px;
+	width: 50px;
+	height: 4px;
+	background-color: #4a4c4d;
+}
+
+.burger-btn::before {
+	position: absolute;
+	content: '';
+	bottom: 10px;
+	width: 50px;
+	height: 4px;
+	background-color: #4a4c4d;
+}
+
+
   
-  .header__item a:hover {
-	color: #c0b7b7 !important;
-	-webkit-transition-duration: 1s;
-		 -o-transition-duration: 1s;
-			transition-duration: 1s;
-  }
   

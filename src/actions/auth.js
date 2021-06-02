@@ -1,8 +1,12 @@
 import axios from 'axios'
 import {setUser} from '../reducers/userReducer'
 import { Redirect } from 'react-router'
+import {useDispatch, useSelector} from "react-redux";
+
+
 
 export const auth =  () => {
+    
 	const token = localStorage.getItem('token')
     return async dispatch => {
         try {
@@ -15,14 +19,9 @@ export const auth =  () => {
 					}
 				}
             )
-			console.log(response.data);
-            dispatch(setUser(response.data))
 			
-			
-        } catch (e) {
-            
-			
-            
+        dispatch(setUser(response.data))	
+        } catch (e) {           
         }
     }
 }

@@ -272,6 +272,7 @@ useEffect(() => {
 
 
 	return (
+		
 		<div className="goAl">
 			<Modal active = {modalActive} setActive={setModalActive}>
 				<div className="modal__title">
