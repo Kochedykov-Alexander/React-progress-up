@@ -2,7 +2,7 @@ const SET_TOKEN = "SET_TOKEN"
 const LOGOUT = "SET_LOGOUT" 
 
 export const defaultState = {
-    currentToken: "",
+    currentToken: {},
     isAuth: false
 }
 
@@ -17,10 +17,10 @@ export default function tokenReducer(state = defaultState, action) {
 		}
 	}
 		case LOGOUT: { 
-		localStorage.removeItem('token')
+		localStorage.clear()
 		return {
 			...state, 
-			currentToken: "",
+			currentToken: {},
 			isAuth: false
 		}
 	}

@@ -1,5 +1,5 @@
 import React from 'react'
-import './navbars.css'
+import './navbar.css'
 
 export default function Navbars({active, setActive}) {
 	return (

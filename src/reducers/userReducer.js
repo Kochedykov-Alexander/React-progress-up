@@ -6,7 +6,7 @@ export const defaultState = {
     isAuth: false
 }
 
-export default function userReducer(state = defaultState, action) {
+export default function userReducer(state = defaultState, action){
     switch (action.type) {
 		case SET_USER: 
 		return {
@@ -16,7 +16,7 @@ export default function userReducer(state = defaultState, action) {
 		
 		}
 		case DELETE_USER:
-		localStorage.removeItem('token') 
+		localStorage.removeItem('token')
 		return {
 			...state, 
 			currentUser: {},

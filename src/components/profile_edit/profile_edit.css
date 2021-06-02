@@ -7,15 +7,7 @@
 	border-radius: 10px;
   }
   
-  .profile_edit_input {
-	width: 410px;
-	height: 82px;
-	font-weight: bold;
-	font-size: 48px;
-	line-height: 56px;
-	border: 0.15px solid gray;
-	border-radius: 10px;
-  }
+  
   
   .profile_edit_info {
 	margin-top: 21px;
@@ -30,13 +22,18 @@
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
+	align-items: center;
+  }
+
+  .profile_edit_email_text {
+	margin-right: 50px;
+  }
+
+  .profile_edit_password_text {
+	margin-right: 30px;
   }
   
-  .profile_edit_email_input {
-	margin-left: 5px;
-	border: 0.15px solid gray;
-	border-radius: 10px;
-  }
+  
   
   .profile_edit_phone {
 	font-size: 18px;
@@ -45,13 +42,14 @@
 	display: -ms-flexbox;
 	display: flex;
 	margin-top: 19px;
+	align-items: center;
+	
+  }
+
+  .profile_edit_phone_text {
+	  margin-right: 20px;
   }
   
-  .profile_edit_phone_input {
-	margin-left: 5px;
-	border: 0.15px solid gray;
-	border-radius: 10px;
-  }
   
   .profile_edit_desc {
 	font-size: 22px;
@@ -59,16 +57,11 @@
   }
   
   .profile_edit_desc_text {
-	margin-top: 24px;
+	margin-top: 25px;
+	margin-right: 20px;
   }
   
-  .profile_edit_desc_input {
-	border: 0.15px solid gray;
-	width: 986px;
-	padding-bottom: 100px;
-	margin-top: 20px;
-	border-radius: 10px;
-  }
+ 
   
   .profile_edit_button {
 	margin-top: 40px;
@@ -94,5 +87,7 @@
   
   input {
 	padding: 0;
+	
   }
+  
   
